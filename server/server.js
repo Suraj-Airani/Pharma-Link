@@ -5,6 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { connectDB } from './config/db.js'
 import vendorRoutes from './routes/vendorRoutes.js'
+import medicineRoutes from './routes/medicineRoutes.js'
 
 // Load .env from the project root (one level above /server)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -19,6 +20,7 @@ app.get('/', (req, res) => res.send("API is working"))
 
 // Routes
 app.use('/api/vendors', vendorRoutes);
+app.use('/api/medicines', medicineRoutes);
 
 
 const PORT = process.env.PORT || 3000;
