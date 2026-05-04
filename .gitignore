@@ -1,0 +1,92 @@
+# ========================
+# Dependencies
+# ========================
+node_modules/
+package-lock.json
+
+# ========================
+# Environment Variables
+# ========================
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+.env*.local
+
+# ========================
+# Build Outputs
+# ========================
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# ========================
+# Logs
+# ========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========================
+# OS Generated Files
+# ========================
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========================
+# Editor / IDE Files
+# ========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ========================
+# Testing & Coverage
+# ========================
+coverage/
+*.lcov
+.nyc_output/
+
+# ========================
+# Miscellaneous
+# ========================
+*.local
+*.pid
+*.seed
+*.pid.lock
+.cache/
+.temp/
+.tmp/
+
+# ========================
+# Vercel
+# ========================
+.vercel/
+
+# ========================
+# Debug
+# ========================
+.eslintcache
+*.tsbuildinfo
