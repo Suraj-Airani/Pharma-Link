@@ -7,6 +7,7 @@ import { connectDB } from './config/db.js'
 import vendorRoutes from './routes/vendorRoutes.js'
 import medicineRoutes from './routes/medicineRoutes.js'
 import salesRoutes from './routes/salesRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 // Load .env from the project root (one level above /server)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -23,6 +24,7 @@ app.get('/', (req, res) => res.send("API is working"))
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/medicines', medicineRoutes);
 app.use('/api/sales', salesRoutes);
+app.use('/api/auth', authRoutes);
 
 
 const PORT = process.env.PORT || 3000;
