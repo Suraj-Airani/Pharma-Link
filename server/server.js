@@ -9,7 +9,6 @@ import medicineRoutes from './routes/medicineRoutes.js'
 import salesRoutes from './routes/salesRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 
-// Load .env from the project root (one level above /server)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
