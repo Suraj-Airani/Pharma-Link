@@ -1,0 +1,464 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--cream);
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Two-column billing layout */
+.billingLayout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* Search */
+.searchWrapper {
+    position: relative;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.searchIcon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.5;
+}
+
+.searchInput {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.searchInput::placeholder {
+    color: var(--text-muted);
+}
+
+/* Dropdown */
+.dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 50;
+    box-shadow: var(--shadow-lg);
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
+}
+
+.dropdownItem:last-child {
+    border-bottom: none;
+}
+
+.dropdownItem:hover {
+    background: var(--accent-bg);
+}
+
+.dropdownInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dropdownName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.dropdownMeta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.dropdownPrice {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* Cart */
+.cartSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cartTableWrap {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.cartHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: rgba(3, 52, 110, 0.3);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.cartHeaderIcon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+}
+
+.emptyCart {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.cartTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cartTable th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+}
+
+.cartTable td {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.cartTable tr:last-child td {
+    border-bottom: none;
+}
+
+.cartMedName {
+    font-weight: 500;
+    color: var(--text-primary) !important;
+}
+
+.subtotal {
+    font-weight: 600;
+    color: var(--accent) !important;
+}
+
+/* Quantity Controls */
+.qtyControl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qtyBtn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.qtyBtn:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+}
+
+.qtyValue {
+    min-width: 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.removeBtn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: var(--radius-sm);
+    color: var(--danger);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.removeBtn:hover {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+/* Checkout */
+.checkoutBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.totalSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.totalLabel {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.totalValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+}
+
+.checkoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--success);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: all 0.2s;
+}
+
+.checkoutBtn:hover:not(:disabled) {
+    background: #27ae60;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
+}
+
+.checkoutBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.checkoutIcon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(10);
+}
+
+/* Last Sale — Download Invoice */
+.lastSaleBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: rgba(46, 204, 113, 0.08);
+    border: 1px solid rgba(46, 204, 113, 0.25);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.lastSaleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lastSaleLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--success);
+}
+
+.lastSaleAmount {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.downloadBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: var(--bg-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+}
+
+.downloadBtn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.downloadBtnIcon {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0);
+}
+
+/* Recent Sales Sidebar */
+.salesSection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.salesTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+}
+
+.salesList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.saleCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+}
+
+.saleCard:hover {
+    background: var(--bg-card-hover);
+}
+
+.saleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.saleId {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.saleDate {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.saleAmount {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.emptySales {
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .billingLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .salesSection {
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .checkoutBar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .checkoutBtn {
+        justify-content: center;
+    }
+}
