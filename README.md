@@ -16,6 +16,8 @@ A secure, full-stack pharmacy management platform built with React and Node.js, 
 - **Database:** TiDB Cloud (MySQL-compatible)
 - **Deployment:** Vercel
 
+## Live Demo : https://pharma-link-xi.vercel.app/
+
 ## ⚙️ Setup
 ```bash
 # Clone
@@ -39,4 +41,4 @@ Create a `.env` file in the root with your database credentials, JWT secret, and
 | GET/POST | `/api/sales` | Sales & billing |
 
 ## 👨‍💻 Developer
-**Suraj S Airani** — SDE Intern | Final Year ECE Student
+**Suraj S Airani** — SDE Intern at Tap Academy| Final Year ECE Student
