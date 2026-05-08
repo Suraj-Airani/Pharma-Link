@@ -25,10 +25,13 @@ app.use('/api/medicines', medicineRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/auth', authRoutes);
 
+// Connect DB on cold start
+connectDB();
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    await connectDB();
 });
+
+export default app;
