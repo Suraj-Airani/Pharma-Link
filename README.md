@@ -30,15 +30,5 @@ cd server && npm install && npm run server
 cd client && npm install && npm run dev
 ```
 
-Create a `.env` file in the root with your database credentials, JWT secret, and `VITE_BACKEND_URL`.
-
-## 🔌 API Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Admin login |
-| GET/POST/PUT/DELETE | `/api/medicines` | Medicine CRUD |
-| GET/POST/PUT/DELETE | `/api/vendors` | Vendor CRUD |
-| GET/POST | `/api/sales` | Sales & billing |
-
 ## 👨‍💻 Developer
 **Suraj S Airani** — SDE Intern at Tap Academy| Final Year ECE Student
