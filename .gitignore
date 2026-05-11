@@ -83,6 +83,7 @@ coverage/
 # Vercel
 # ========================
 .vercel/
+vercel.json
 
 # ========================
 # Debug
