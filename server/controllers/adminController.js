@@ -41,8 +41,8 @@ export const cleanupGuestData = async (req, res) => {
             connection.release();
 
             res.status(200).json({
-                message: 'Guest data purged successfully',
-                purged: {
+                message: 'Guest data cleaned successfully',
+                cleaned: {
                     saleItems: saleItems.affectedRows,
                     sales: sales.affectedRows,
                     medicines: medicines.affectedRows,

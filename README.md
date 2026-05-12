@@ -9,6 +9,8 @@ A secure, full-stack pharmacy management platform built with React and Node.js, 
 - **Billing (POS)** — Cart-based checkout with automatic stock deduction
 - **PDF Invoices** — Auto-generated branded invoices on every sale
 - **Dashboard** — Real-time alerts for low stock & expiring medicines
+- **Guest Admin Mode (Demo)** — Explore the app with a "soft reset" guard. Modifying admin data returns simulated success without touching the database!
+- **Data Cleanup** — Admins can securely clean all guest-generated test data in a single click.
 
 ## 🛠️ Tech Stack
 - **Frontend:** React, Vite, CSS Modules, Axios, jsPDF
