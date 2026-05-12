@@ -36,9 +36,12 @@ export const createVendor = async (req, res) => {
             return res.status(400).json({ message: 'Vendor name is required' });
         }
 
+        // Set created_by based on user role
+        const created_by = req.user.role === 'guest' ? 'guest' : 'admin';
+
         const [result] = await pool.query(
-            'INSERT INTO Vendors (name, contact_person, phone, email) VALUES (?, ?, ?, ?)',
-            [name, contact_person || null, phone || null, email || null]
+            'INSERT INTO Vendors (name, contact_person, phone, email, created_by) VALUES (?, ?, ?, ?, ?)',
+            [name, contact_person || null, phone || null, email || null, created_by]
         );
 
         res.status(201).json({
@@ -58,6 +61,23 @@ export const updateVendor = async (req, res) => {
 
         if (!name) {
             return res.status(400).json({ message: 'Vendor name is required' });
+        }
+
+        // Guest guard: check if this record is admin-owned
+        if (req.user.role === 'guest') {
+            const [existing] = await pool.query(
+                'SELECT created_by FROM Vendors WHERE vendor_id = ?',
+                [req.params.id]
+            );
+
+            if (existing.length === 0) {
+                return res.status(404).json({ message: 'Vendor not found' });
+            }
+
+            // Simulated success — don't touch admin data
+            if (existing[0].created_by === 'admin') {
+                return res.status(200).json({ message: 'Vendor updated successfully' });
+            }
         }
 
         const [result] = await pool.query(
@@ -80,6 +100,23 @@ export const updateVendor = async (req, res) => {
 export const deleteVendor = async (req, res) => {
     try {
         const vendorId = req.params.id;
+
+        // Guest guard: check if this record is admin-owned
+        if (req.user.role === 'guest') {
+            const [existing] = await pool.query(
+                'SELECT created_by FROM Vendors WHERE vendor_id = ?',
+                [vendorId]
+            );
+
+            if (existing.length === 0) {
+                return res.status(404).json({ message: 'Vendor not found' });
+            }
+
+            // Simulated success — don't touch admin data
+            if (existing[0].created_by === 'admin') {
+                return res.status(200).json({ message: 'Vendor deleted successfully' });
+            }
+        }
 
         // Safety Check: block deletion if vendor is linked to any medicines
         const [medicines] = await pool.query(

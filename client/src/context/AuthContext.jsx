@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     const isAuthenticated = !!token;
+    const role = admin?.role || 'admin';
 
     const login = (newToken, adminData) => {
         setToken(newToken);
@@ -26,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, admin, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ token, admin, isAuthenticated, role, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

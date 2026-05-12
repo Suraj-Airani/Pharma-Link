@@ -8,6 +8,7 @@ import vendorRoutes from './routes/vendorRoutes.js'
 import medicineRoutes from './routes/medicineRoutes.js'
 import salesRoutes from './routes/salesRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -24,6 +25,7 @@ app.use('/api/vendors', vendorRoutes);
 app.use('/api/medicines', medicineRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Connect DB on cold start
 connectDB();

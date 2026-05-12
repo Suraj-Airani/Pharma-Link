@@ -16,7 +16,7 @@ export const getMedicines = async (req, res) => {
     }
 };
 
-// GET /api/medicines/low-stock — Medicines where stock_quantity < 10
+// GET /api/medicines/low-stock — Medicines where stock_quantity < 100
 export const getLowStock = async (req, res) => {
     try {
         const [rows] = await pool.query(`
@@ -90,9 +90,12 @@ export const createMedicine = async (req, res) => {
             return res.status(400).json({ message: 'Stock quantity must be a non-negative integer' });
         }
 
+        // Set created_by based on user role
+        const created_by = req.user.role === 'guest' ? 'guest' : 'admin';
+
         const [result] = await pool.query(
-            'INSERT INTO Medicines (name, category, price, stock_quantity, expiry_date, vendor_id) VALUES (?, ?, ?, ?, ?, ?)',
-            [name, category, price, stock_quantity, expiry_date, vendor_id || null]
+            'INSERT INTO Medicines (name, category, price, stock_quantity, expiry_date, vendor_id, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [name, category, price, stock_quantity, expiry_date, vendor_id || null, created_by]
         );
 
         res.status(201).json({
@@ -122,6 +125,23 @@ export const updateMedicine = async (req, res) => {
             return res.status(400).json({ message: 'Stock quantity must be a non-negative integer' });
         }
 
+        // Guest guard: check if this record is admin-owned
+        if (req.user.role === 'guest') {
+            const [existing] = await pool.query(
+                'SELECT created_by FROM Medicines WHERE medicine_id = ?',
+                [req.params.id]
+            );
+
+            if (existing.length === 0) {
+                return res.status(404).json({ message: 'Medicine not found' });
+            }
+
+            // Simulated success — don't touch admin data
+            if (existing[0].created_by === 'admin') {
+                return res.status(200).json({ message: 'Medicine updated successfully' });
+            }
+        }
+
         const [result] = await pool.query(
             'UPDATE Medicines SET name = ?, category = ?, price = ?, stock_quantity = ?, expiry_date = ?, vendor_id = ? WHERE medicine_id = ?',
             [name, category, price, stock_quantity, expiry_date, vendor_id || null, req.params.id]
@@ -141,6 +161,23 @@ export const updateMedicine = async (req, res) => {
 // DELETE /api/medicines/:id — Delete a medicine
 export const deleteMedicine = async (req, res) => {
     try {
+        // Guest guard: check if this record is admin-owned
+        if (req.user.role === 'guest') {
+            const [existing] = await pool.query(
+                'SELECT created_by FROM Medicines WHERE medicine_id = ?',
+                [req.params.id]
+            );
+
+            if (existing.length === 0) {
+                return res.status(404).json({ message: 'Medicine not found' });
+            }
+
+            // Simulated success — don't touch admin data
+            if (existing[0].created_by === 'admin') {
+                return res.status(200).json({ message: 'Medicine deleted successfully' });
+            }
+        }
+
         const [result] = await pool.query('DELETE FROM Medicines WHERE medicine_id = ?', [req.params.id]);
 
         if (result.affectedRows === 0) {

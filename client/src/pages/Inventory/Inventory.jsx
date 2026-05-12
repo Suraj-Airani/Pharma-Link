@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 import DataTable from '../../components/DataTable/DataTable';
 import Modal from '../../components/Modal/Modal';
 import StatusBadge from '../../components/StatusBadge/StatusBadge';
@@ -26,6 +27,7 @@ const Inventory = () => {
     const [form, setForm] = useState(emptyForm);
     const [submitting, setSubmitting] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
+    const { role } = useAuth();
 
     useEffect(() => {
         fetchData();
@@ -138,7 +140,11 @@ const Inventory = () => {
         try {
             if (editing) {
                 await API.put(`/api/medicines/${editing.medicine_id}`, payload);
-                toast.success('Medicine updated successfully');
+                toast.success(
+                    role === 'guest'
+                        ? 'Medicine updated (Demo Mode: Changes will not persist)'
+                        : 'Medicine updated successfully'
+                );
             } else {
                 await API.post('/api/medicines', payload);
                 toast.success('Medicine added successfully');
@@ -162,7 +168,11 @@ const Inventory = () => {
 
         try {
             await API.delete(`/api/medicines/${deleteTarget.medicine_id}`);
-            toast.success('Medicine deleted');
+            toast.success(
+                role === 'guest'
+                    ? 'Record removed (Demo Mode: Changes will not persist)'
+                    : 'Medicine deleted'
+            );
             fetchData();
         } catch (error) {
             const msg = error.response?.data?.message || 'Delete failed';

@@ -11,6 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [guestLoading, setGuestLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -33,6 +34,21 @@ const Login = () => {
             toast.error(msg);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGuestLogin = async () => {
+        setGuestLoading(true);
+        try {
+            const res = await API.post('/api/auth/guest-login');
+            login(res.data.token, res.data.admin);
+            toast.success('Welcome, Guest!');
+            navigate('/dashboard');
+        } catch (error) {
+            const msg = error.response?.data?.message || 'Guest login failed';
+            toast.error(msg);
+        } finally {
+            setGuestLoading(false);
         }
     };
 
@@ -94,9 +110,20 @@ const Login = () => {
                         <button
                             type="submit"
                             className={styles.submitBtn}
-                            disabled={loading}
+                            disabled={loading || guestLoading}
                         >
                             {loading ? 'Signing in...' : 'Sign In'}
+                        </button>
+
+                        <div className={styles.divider}>or</div>
+
+                        <button
+                            type="button"
+                            className={styles.guestBtn}
+                            onClick={handleGuestLogin}
+                            disabled={guestLoading || loading}
+                        >
+                            {guestLoading ? 'Logging in as Guest...' : 'Continue as Guest'}
                         </button>
                     </form>
                 </div>

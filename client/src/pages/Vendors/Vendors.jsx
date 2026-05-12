@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 import DataTable from '../../components/DataTable/DataTable';
 import Modal from '../../components/Modal/Modal';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
@@ -22,6 +23,7 @@ const Vendors = () => {
     const [form, setForm] = useState(emptyForm);
     const [submitting, setSubmitting] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
+    const { role } = useAuth();
 
     useEffect(() => {
         fetchVendors();
@@ -105,7 +107,11 @@ const Vendors = () => {
         try {
             if (editing) {
                 await API.put(`/api/vendors/${editing.vendor_id}`, payload);
-                toast.success('Vendor updated successfully');
+                toast.success(
+                    role === 'guest'
+                        ? 'Vendor updated (Demo Mode: Changes will not persist)'
+                        : 'Vendor updated successfully'
+                );
             } else {
                 await API.post('/api/vendors', payload);
                 toast.success('Vendor added successfully');
@@ -129,7 +135,11 @@ const Vendors = () => {
 
         try {
             await API.delete(`/api/vendors/${deleteTarget.vendor_id}`);
-            toast.success('Vendor deleted');
+            toast.success(
+                role === 'guest'
+                    ? 'Record removed (Demo Mode: Changes will not persist)'
+                    : 'Vendor deleted'
+            );
             fetchVendors();
         } catch (error) {
             const msg = error.response?.data?.message || 'Delete failed';

@@ -132,6 +132,47 @@
     cursor: not-allowed;
 }
 
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 4px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.guestBtn {
+    padding: 14px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.guestBtn:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-bg);
+    transform: translateY(-1px);
+}
+
+.guestBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .imageSide {
     flex: 1;
     background: url('/images/login-bg.png') center/cover no-repeat;

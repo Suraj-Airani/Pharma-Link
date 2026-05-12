@@ -58,6 +58,9 @@ export const createSale = async (req, res) => {
             }
         }
 
+        // Set created_by based on user role
+        const created_by = req.user.role === 'guest' ? 'guest' : 'admin';
+
         // Begin transaction
         await connection.beginTransaction();
 
@@ -94,8 +97,8 @@ export const createSale = async (req, res) => {
 
         // Step 2: Insert Sale header
         const [saleResult] = await connection.query(
-            'INSERT INTO Sales (sale_date, total_amount) VALUES (?, ?)',
-            [sale_date || new Date().toISOString().slice(0, 19).replace('T', ' '), total_amount]
+            'INSERT INTO Sales (sale_date, total_amount, created_by) VALUES (?, ?, ?)',
+            [sale_date || new Date().toISOString().slice(0, 19).replace('T', ' '), total_amount, created_by]
         );
 
         const sale_id = saleResult.insertId;
@@ -139,6 +142,25 @@ export const deleteSale = async (req, res) => {
     const connection = await pool.getConnection();
 
     try {
+        // Guest guard: check if this sale is admin-owned
+        if (req.user.role === 'guest') {
+            const [existing] = await connection.query(
+                'SELECT created_by FROM Sales WHERE sale_id = ?',
+                [req.params.id]
+            );
+
+            if (existing.length === 0) {
+                connection.release();
+                return res.status(404).json({ message: 'Sale not found' });
+            }
+
+            // Simulated success — don't touch admin data
+            if (existing[0].created_by === 'admin') {
+                connection.release();
+                return res.status(200).json({ message: 'Sale deleted and stock restored successfully' });
+            }
+        }
+
         await connection.beginTransaction();
 
         // Check sale exists

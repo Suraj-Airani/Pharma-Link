@@ -73,6 +73,7 @@ export const login = async (req, res) => {
             {
                 adminId: admin.admin_id,
                 username: admin.username,
+                role: 'admin',
             },
             process.env.JWT_SECRET,
             { expiresIn: '8h' }
@@ -84,10 +85,37 @@ export const login = async (req, res) => {
             admin: {
                 adminId: admin.admin_id,
                 username: admin.username,
+                role: 'admin',
             },
         });
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).json({ message: 'Failed to login', error: error.message });
+    }
+};
+
+// C. GUEST LOGIN — POST /api/auth/guest-login
+export const guestLogin = async (req, res) => {
+    try {
+        const token = jwt.sign(
+            {
+                username: 'guest',
+                role: 'guest',
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '8h' }
+        );
+
+        res.status(200).json({
+            message: 'Guest login successful',
+            token,
+            admin: {
+                username: 'guest',
+                role: 'guest',
+            },
+        });
+    } catch (error) {
+        console.error('Error with guest login:', error);
+        res.status(500).json({ message: 'Failed to login as guest', error: error.message });
     }
 };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 import { generateInvoicePDF } from '../../utils/pdfGenerator';
 import styles from './Billing.module.css';
 import searchIcon from '../../assets/light-icons/search.png';
@@ -15,6 +16,7 @@ const Billing = () => {
     const [loading, setLoading] = useState(true);
     const [checkingOut, setCheckingOut] = useState(false);
     const [lastSale, setLastSale] = useState(null);
+    const { role } = useAuth();
 
     useEffect(() => {
         fetchData();
