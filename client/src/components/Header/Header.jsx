@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
 import toast from 'react-hot-toast';
 import userIcon from '../../assets/light-icons/user.png';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 const Header = () => {
     const { admin, role, logout } = useAuth();
     const navigate = useNavigate();
     const [cleaning, setCleaning] = useState(false);
+    const [showCleanupDialog, setShowCleanupDialog] = useState(false);
 
     const handleLogout = () => {
         logout();
@@ -17,8 +19,7 @@ const Header = () => {
     };
 
     const handleCleanup = async () => {
-        if (!window.confirm('Clean all guest-created data? This cannot be undone.')) return;
-
+        setShowCleanupDialog(false);
         setCleaning(true);
         try {
             const res = await API.post('/api/admin/cleanup');
@@ -35,33 +36,44 @@ const Header = () => {
     };
 
     return (
-        <header className={styles.header}>
-            <div className={styles.brand}>
-                <img src="/icon.png" alt="PharmaLink" className={styles.logo} />
-                <h1 className={styles.title}>PharmaLink</h1>
-            </div>
-            <div className={styles.actions}>
-                {role === 'admin' && (
-                    <button
-                        className={styles.cleanupBtn}
-                        onClick={handleCleanup}
-                        disabled={cleaning}
-                    >
-                        {cleaning ? 'Cleaning...' : '🧹 Clean Guest Data'}
-                    </button>
-                )}
-                {role === 'guest' && (
-                    <span className={styles.demoBadge}>Demo Mode</span>
-                )}
-                <div className={styles.adminInfo}>
-                    <img src={userIcon} alt="Admin" className={styles.adminIcon} />
-                    <span className={styles.adminName}>{admin?.username || 'Admin'}</span>
+        <>
+            <header className={styles.header}>
+                <div className={styles.brand}>
+                    <img src="/icon.png" alt="PharmaLink" className={styles.logo} />
+                    <h1 className={styles.title}>PharmaLink</h1>
                 </div>
-                <button className={styles.logoutBtn} onClick={handleLogout}>
-                    Logout
-                </button>
-            </div>
-        </header>
+                <div className={styles.actions}>
+                    {role === 'admin' && (
+                        <button
+                            className={styles.cleanupBtn}
+                            onClick={() => setShowCleanupDialog(true)}
+                            disabled={cleaning}
+                        >
+                            {cleaning ? 'Cleaning...' : '🧹 Clean Guest Data'}
+                        </button>
+                    )}
+                    {role === 'guest' && (
+                        <span className={styles.demoBadge}>Demo Mode</span>
+                    )}
+                    <div className={styles.adminInfo}>
+                        <img src={userIcon} alt="Admin" className={styles.adminIcon} />
+                        <span className={styles.adminName}>{admin?.username || 'Admin'}</span>
+                    </div>
+                    <button className={styles.logoutBtn} onClick={handleLogout}>
+                        Logout
+                    </button>
+                </div>
+            </header>
+
+            <ConfirmDialog
+                isOpen={showCleanupDialog}
+                title="Clean Up Demo Data"
+                message="This will permanently delete all guest-created medicines, vendors, sales, and sale items. Admin data will remain untouched. This action cannot be undone."
+                confirmLabel="Clean Up"
+                onConfirm={handleCleanup}
+                onCancel={() => setShowCleanupDialog(false)}
+            />
+        </>
     );
 };
 

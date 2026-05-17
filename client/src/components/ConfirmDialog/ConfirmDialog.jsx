@@ -1,6 +1,6 @@
 import styles from './ConfirmDialog.module.css';
 
-const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel }) => {
+const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel, confirmLabel }) => {
     if (!isOpen) return null;
 
     return (
@@ -16,7 +16,7 @@ const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel }) => {
                         Cancel
                     </button>
                     <button className={styles.confirmBtn} onClick={onConfirm}>
-                        Delete
+                        {confirmLabel || 'Delete'}
                     </button>
                 </div>
             </div>
