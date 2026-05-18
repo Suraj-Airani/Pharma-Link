@@ -14,7 +14,7 @@ A secure, full-stack pharmacy management platform built with React and Node.js, 
 
 ## 🛠️ Tech Stack
 - **Frontend:** React, Vite, CSS Modules, Axios, jsPDF
-- **Backend:** Node.js, Express, JWT, Bcrypt
+- **Backend:** Node.js, Express
 - **Database:** TiDB Cloud (MySQL-compatible)
 - **Deployment:** Vercel
 
