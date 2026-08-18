@@ -132,6 +132,30 @@
     cursor: not-allowed;
 }
 
+.signUpBtn {
+    padding: 14px;
+    background: transparent;
+    color: var(--accent);
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.signUpBtn:hover:not(:disabled) {
+    background: var(--accent);
+    color: var(--bg-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(110, 172, 218, 0.3);
+}
+
+.signUpBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .divider {
     display: flex;
     align-items: center;

@@ -18,7 +18,7 @@ export const register = async (req, res) => {
         }
 
         const [existing] = await pool.query(
-            'SELECT admin_id FROM Admins WHERE username = ?',
+            'SELECT id FROM Admins WHERE username = ?',
             [username]
         );
 
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
 
         const token = jwt.sign(
             {
-                adminId: admin.admin_id,
+                adminId: admin.id,
                 username: admin.username,
                 role: 'admin',
             },
@@ -83,7 +83,7 @@ export const login = async (req, res) => {
             message: 'Login successful',
             token,
             admin: {
-                adminId: admin.admin_id,
+                adminId: admin.id,
                 username: admin.username,
                 role: 'admin',
             },

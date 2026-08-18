@@ -11,9 +11,12 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [signUpLoading, setSignUpLoading] = useState(false);
     const [guestLoading, setGuestLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
+
+    const anyLoading = loading || signUpLoading || guestLoading;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +37,35 @@ const Login = () => {
             toast.error(msg);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSignUp = async () => {
+        if (!username || !password) {
+            toast.error('Please enter username and password');
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
+
+        setSignUpLoading(true);
+        try {
+            // Register the new admin
+            await API.post('/api/auth/register', { username, password });
+            toast.success('Account created! Logging you in...');
+
+            // Auto-login after successful registration
+            const res = await API.post('/api/auth/login', { username, password });
+            login(res.data.token, res.data.admin);
+            navigate('/dashboard');
+        } catch (error) {
+            const msg = error.response?.data?.message || 'Sign up failed';
+            toast.error(msg);
+        } finally {
+            setSignUpLoading(false);
         }
     };
 
@@ -110,9 +142,18 @@ const Login = () => {
                         <button
                             type="submit"
                             className={styles.submitBtn}
-                            disabled={loading || guestLoading}
+                            disabled={anyLoading}
                         >
                             {loading ? 'Signing in...' : 'Sign In'}
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.signUpBtn}
+                            onClick={handleSignUp}
+                            disabled={anyLoading}
+                        >
+                            {signUpLoading ? 'Creating account...' : 'Sign Up'}
                         </button>
 
                         <div className={styles.divider}>or</div>
@@ -121,7 +162,7 @@ const Login = () => {
                             type="button"
                             className={styles.guestBtn}
                             onClick={handleGuestLogin}
-                            disabled={guestLoading || loading}
+                            disabled={anyLoading}
                         >
                             {guestLoading ? 'Logging in as Guest...' : 'Continue as Guest'}
                         </button>
